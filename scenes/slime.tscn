@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://bv0b83teo0fcf"]
+
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_8mi66"]
+[ext_resource type="Texture2D" uid="uid://byye4is3busqj" path="res://assets/sprites/slime_green.png" id="1_yft74"]
+[ext_resource type="PackedScene" uid="uid://ca6p347w1hxcn" path="res://scenes/kill_zone.tscn" id="2_uh603"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aefx3"]
+atlas = ExtResource("1_yft74")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_joafn"]
+atlas = ExtResource("1_yft74")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4jxy"]
+atlas = ExtResource("1_yft74")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fx14"]
+atlas = ExtResource("1_yft74")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fwwa3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aefx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_joafn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4jxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fx14")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvveg"]
+size = Vector2(10, 10)
+
+[node name="Slime" type="Node2D"]
+position = Vector2(0, -12)
+script = ExtResource("1_8mi66")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fwwa3")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="KillZone" parent="." instance=ExtResource("2_uh603")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_pvveg")
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(8, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-9, 0)
